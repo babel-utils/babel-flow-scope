@@ -32,6 +32,9 @@ const plugin = ({ types: t }) => {
       },
       'ClassDeclaration|FunctionDeclaration|InterfaceDeclaration|TypeAlias'(path) {
         path.insertAfter(getOutput(path));
+      },
+      ClassExpression(path) {
+        path.find(p => p.isDeclaration()).insertAfter(getOutput(path));
       }
     },
   };
@@ -48,10 +51,12 @@ pluginTester({
     'import {typeof}': 'import {typeof a} from "mod";',
     'type alias': 'type a = {};',
     'interface declaration': 'interface a {}',
+    'class declaration': 'class a {}',
     'type alias params': 'type a<b> = {}',
     'interface params': 'interface a<b> {}',
     'class params': 'class a<b> {}',
     'function params': 'function a<b>() {}',
     'nested': 'function a<b>() {}',
+    'class expression': 'let a = class b {}',
   }
 })

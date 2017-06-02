@@ -103,7 +103,25 @@ interface a {}
 "
 `;
 
-exports[`7. type alias params 1`] = `
+exports[`7. class declaration 1`] = `
+"
+class a {}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`
+  a:
+    kind: 'declaration'
+    path: Path: Identifier (1:6,1:7)
+      name: 'a'
+\`;
+class a {}
+\`{}
+\`;
+"
+`;
+
+exports[`8. type alias params 1`] = `
 "
 type a<b> = {}
 
@@ -127,7 +145,7 @@ type a<b> = {};
 "
 `;
 
-exports[`8. interface params 1`] = `
+exports[`9. interface params 1`] = `
 "
 interface a<b> {}
 
@@ -151,13 +169,17 @@ interface a<b> {}
 "
 `;
 
-exports[`9. class params 1`] = `
+exports[`10. class params 1`] = `
 "
 class a<b> {}
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-\`{}
+\`
+  a:
+    kind: 'declaration'
+    path: Path: Identifier (1:6,1:7)
+      name: 'a'
 \`;
 class a<b> {}
 \`
@@ -171,7 +193,7 @@ class a<b> {}
 "
 `;
 
-exports[`10. function params 1`] = `
+exports[`11. function params 1`] = `
 "
 function a<b>() {}
 
@@ -191,7 +213,7 @@ function a<b>() {}
 "
 `;
 
-exports[`11. nested 1`] = `
+exports[`12. nested 1`] = `
 "
 function a<b>() {}
 
@@ -207,6 +229,24 @@ function a<b>() {}
       bound: undefined
       name: 'b'
       variance: null
+\`;
+"
+`;
+
+exports[`13. class expression 1`] = `
+"
+let a = class b {}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`{}
+\`;
+let a = class b {};
+\`
+  b:
+    kind: 'expression'
+    path: Path: Identifier (1:14,1:15)
+      name: 'b'
 \`;
 "
 `;

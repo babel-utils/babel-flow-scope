@@ -15,22 +15,40 @@ type Path = {
 
 type Bindings = {
   [name: string]: {
-    kind: 'param' | 'hoisted' | 'import',
-    id: Node,
+    kind: 'import' | 'declaration' | 'expression' | 'param',
     path: Path,
   },
 };
+
+type Visitor = {
+  [method: string]: (path: Path, state: { bindings: Bindings }) => void;
+};
 */
 
-let visitor = {
+let getId = (kind, path, bindings) => {
+  if (path.node.id) {
+    let id = path.get('id');
+    bindings[id.node.name] = {kind, path: id};
+  }
+};
+
+let visitor /*: Visitor */  = {
   Scope(path) {
     path.skip();
   },
 
-  'InterfaceDeclaration|TypeAlias'(path, state) {
-    let id = path.get('id');
-    state.bindings[id.node.name] = {kind: 'declaration', path: id};
-    path.skip();
+  Declaration(path, state) {
+    if (
+      path.isInterfaceDeclaration() ||
+      path.isTypeAlias() ||
+      path.isClassDeclaration()
+    ) {
+      getId('declaration', path, state.bindings);
+    }
+
+    if (!path.isImportDeclaration()) {
+      path.skip();
+    }
   },
 
   TypeParameter(path, state) {
@@ -59,7 +77,11 @@ function getFlowBindingsInScope(path /*: Path */) /*: Bindings */ {
   let scopePath = getFlowScopePath(path);
   let bindings = {};
 
-  scopePath.traverse(visitor, { bindings });
+  if (scopePath.isClassExpression()) {
+    getId('expression', scopePath, bindings);
+  } else {
+    scopePath.traverse(visitor, { bindings });
+  }
 
   return bindings;
 }
