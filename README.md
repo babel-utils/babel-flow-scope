@@ -1,6 +1,6 @@
 # babel-flow-scope
 
-> Collect Flow bindings in a given scope
+> Collect [Flow](https://flow.org/) bindings in a given scope
 
 ```js
 import type foo from "mod";
@@ -26,3 +26,17 @@ getFlowBindingsInScope(path);
 //   }
 // }
 ```
+
+## API
+
+#### `getFlowScopePath(path)`
+
+Find the closest path to a Flow scope.
+
+#### `getFlowBindingsInScope(path)`
+
+Retreive all the Flow bindings in the local Flow scope.
+
+#### `findFlowBinding(path, name)`
+
+Search for a binding in the current scope and parent scopes.
