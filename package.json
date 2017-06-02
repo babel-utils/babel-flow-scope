@@ -1,6 +1,6 @@
 {
   "name": "babel-flow-scope",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Collect Flow bindings in a given scope",
   "main": "index.js",
   "repository": "babel-utils/babel-flow-scope",
