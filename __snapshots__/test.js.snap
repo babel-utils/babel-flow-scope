@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`1. current scope 1`] = `
+"
+type END = 1; START;
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+type END = 1;START;
+\`
+  kind: 'declaration'
+  path: Path: Identifier (1:5,1:8)
+    name: 'END'
+\`;
+"
+`;
+
 exports[`1. import type 1`] = `
 "
 import type a from \\"mod\\";
@@ -30,6 +45,40 @@ import {type a} from \\"mod\\";
       name: 'a'
 \`;
 import { type a } from \\"mod\\";
+"
+`;
+
+exports[`2. nested scope 1`] = `
+"
+type END = 1; function a() { START; }
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+type END = 1;function a() {
+  START;\`
+  kind: 'declaration'
+  path: Path: Identifier (1:5,1:8)
+    name: 'END'
+\`;
+}
+"
+`;
+
+exports[`3. deep nested scope 1`] = `
+"
+type END = 1; function a() { function b() { START; } }
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+type END = 1;function a() {
+  function b() {
+    START;\`
+  kind: 'declaration'
+  path: Path: Identifier (1:5,1:8)
+    name: 'END'
+\`;
+  }
+}
 "
 `;
 

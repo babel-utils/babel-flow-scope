@@ -13,11 +13,13 @@ type Path = {
   [key: string]: any,
 };
 
+type Binding = {
+  kind: 'import' | 'declaration' | 'expression' | 'param',
+  path: Path,
+};
+
 type Bindings = {
-  [name: string]: {
-    kind: 'import' | 'declaration' | 'expression' | 'param',
-    path: Path,
-  },
+  [name: string]: Binding,
 };
 
 type Visitor = {
@@ -86,5 +88,19 @@ function getFlowBindingsInScope(path /*: Path */) /*: Bindings */ {
   return bindings;
 }
 
+function findFlowBinding(path /*: Path */, name /*: string */) /*: Binding | null */ {
+  let scopePath = path;
+  let binding;
+
+  do {
+    scopePath = getFlowScopePath(scopePath);
+    let bindings = getFlowBindingsInScope(scopePath);
+    if (bindings[name]) return bindings[name];
+  } while (scopePath = scopePath.parentPath);
+
+  return null;
+}
+
 exports.getFlowScopePath = getFlowScopePath;
 exports.getFlowBindingsInScope = getFlowBindingsInScope;
+exports.findFlowBinding = findFlowBinding;

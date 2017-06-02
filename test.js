@@ -4,7 +4,7 @@
 const pluginTester = require('babel-plugin-tester');
 const getBabylonOptions = require('babylon-options');
 const printAST = require('ast-pretty-print');
-const {getFlowBindingsInScope} = require('./');
+const {getFlowBindingsInScope, findFlowBinding} = require('./');
 
 const babelOptions = {
   parserOpts: getBabylonOptions({
@@ -13,19 +13,22 @@ const babelOptions = {
   }),
 };
 
-const plugin = ({ types: t }) => {
+const print = (t, value) => {
+  let printed = printAST(value) + '\n';
+  return t.expressionStatement(
+    t.templateLiteral([
+      t.templateElement({ raw: printed }, true)
+    ], [])
+  );
+};
+
+const capturePlugin = ({ types: t }) => {
   let getOutput = path => {
-    let bindings = getFlowBindingsInScope(path);
-    let printed = printAST(bindings) + '\n';
-    return t.expressionStatement(
-      t.templateLiteral([
-        t.templateElement({ raw: printed }, true)
-      ], [])
-    );
+    return print(t, getFlowBindingsInScope(path));
   };
 
   return {
-    name: 'test-plugin',
+    name: 'test-capture-plugin',
     visitor: {
       Program(path) {
         path.unshiftContainer('body', getOutput(path));
@@ -41,7 +44,7 @@ const plugin = ({ types: t }) => {
 };
 
 pluginTester({
-  plugin,
+  plugin: capturePlugin,
   snapshot: true,
   babelOptions,
   tests: {
@@ -58,5 +61,33 @@ pluginTester({
     'function params': 'function a<b>() {}',
     'nested': 'function a<b>() {}',
     'class expression': 'let a = class b {}',
+  }
+});
+
+const searchPlugin = ({ types: t }) => {
+  let getOutput = path => {
+    return print(t, findFlowBinding(path, 'END'));
+  };
+
+  return {
+    name: 'test-search-plugin',
+    visitor: {
+      Identifier(path) {
+        if (path.node.name === 'START') {
+          path.find(p => p.isStatement()).insertAfter(getOutput(path));
+        }
+      }
+    },
+  };
+};
+
+pluginTester({
+  plugin: searchPlugin,
+  snapshot: true,
+  babelOptions,
+  tests: {
+    'current scope': 'type END = 1; START;',
+    'nested scope': 'type END = 1; function a() { START; }',
+    'deep nested scope': 'type END = 1; function a() { function b() { START; } }',
   }
 })
