@@ -3,6 +3,11 @@
 > Collect Flow bindings in a given scope
 
 ```js
+import type foo from "mod";
+type baz<bar> = {};
+```
+
+```js
 import {getFlowBindingsInScope} from 'babel-flow-scope';
 
 getFlowBindingsInScope(path);
