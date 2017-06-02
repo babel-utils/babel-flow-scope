@@ -1,0 +1,212 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`1. import type 1`] = `
+"
+import type a from \\"mod\\";
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`
+  a:
+    kind: 'import'
+    path: Path: Identifier (1:12,1:13)
+      name: 'a'
+\`;
+import type a from \\"mod\\";
+"
+`;
+
+exports[`2. import {type} 1`] = `
+"
+import {type a} from \\"mod\\";
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`
+  a:
+    kind: 'import'
+    path: Path: Identifier (1:13,1:14)
+      __clone: Function
+      name: 'a'
+\`;
+import { type a } from \\"mod\\";
+"
+`;
+
+exports[`3. import typeof 1`] = `
+"
+import typeof {a} from \\"mod\\";
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`
+  a:
+    kind: 'import'
+    path: Path: Identifier (1:15,1:16)
+      __clone: Function
+      name: 'a'
+\`;
+import typeof { a } from \\"mod\\";
+"
+`;
+
+exports[`4. import {typeof} 1`] = `
+"
+import {typeof a} from \\"mod\\";
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`
+  a:
+    kind: 'import'
+    path: Path: Identifier (1:15,1:16)
+      __clone: Function
+      name: 'a'
+\`;
+import { typeof a } from \\"mod\\";
+"
+`;
+
+exports[`5. type alias 1`] = `
+"
+type a = {};
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`
+  a:
+    kind: 'declaration'
+    path: Path: Identifier (1:5,1:6)
+      name: 'a'
+\`;
+type a = {};
+\`{}
+\`;
+"
+`;
+
+exports[`6. interface declaration 1`] = `
+"
+interface a {}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`
+  a:
+    kind: 'declaration'
+    path: Path: Identifier (1:10,1:11)
+      name: 'a'
+\`;
+interface a {}
+\`{}
+\`;
+"
+`;
+
+exports[`7. type alias params 1`] = `
+"
+type a<b> = {}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`
+  a:
+    kind: 'declaration'
+    path: Path: Identifier (1:5,1:6)
+      name: 'a'
+\`;
+type a<b> = {};
+\`
+  b:
+    kind: 'param'
+    path: Path: TypeParameter (1:7,1:8)
+      bound: undefined
+      name: 'b'
+      variance: null
+\`;
+"
+`;
+
+exports[`8. interface params 1`] = `
+"
+interface a<b> {}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`
+  a:
+    kind: 'declaration'
+    path: Path: Identifier (1:10,1:11)
+      name: 'a'
+\`;
+interface a<b> {}
+\`
+  b:
+    kind: 'param'
+    path: Path: TypeParameter (1:12,1:13)
+      bound: undefined
+      name: 'b'
+      variance: null
+\`;
+"
+`;
+
+exports[`9. class params 1`] = `
+"
+class a<b> {}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`{}
+\`;
+class a<b> {}
+\`
+  b:
+    kind: 'param'
+    path: Path: TypeParameter (1:8,1:9)
+      bound: undefined
+      name: 'b'
+      variance: null
+\`;
+"
+`;
+
+exports[`10. function params 1`] = `
+"
+function a<b>() {}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`{}
+\`;
+function a<b>() {}
+\`
+  b:
+    kind: 'param'
+    path: Path: TypeParameter (1:11,1:12)
+      bound: undefined
+      name: 'b'
+      variance: null
+\`;
+"
+`;
+
+exports[`11. nested 1`] = `
+"
+function a<b>() {}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`{}
+\`;
+function a<b>() {}
+\`
+  b:
+    kind: 'param'
+    path: Path: TypeParameter (1:11,1:12)
+      bound: undefined
+      name: 'b'
+      variance: null
+\`;
+"
+`;
