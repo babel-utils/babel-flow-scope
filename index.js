@@ -48,7 +48,7 @@ let visitor /*: Visitor */  = {
       getId('declaration', path, state.bindings);
     }
 
-    if (!path.isImportDeclaration()) {
+    if (!path.isImportDeclaration() && !path.isExportDeclaration()) {
       path.skip();
     }
   },

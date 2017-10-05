@@ -34,7 +34,11 @@ const capturePlugin = ({ types: t }) => {
         path.unshiftContainer('body', getOutput(path));
       },
       'ClassDeclaration|FunctionDeclaration|InterfaceDeclaration|TypeAlias'(path) {
-        path.insertAfter(getOutput(path));
+        if (path.parentPath.isExportDeclaration()) {
+          path.parentPath.insertAfter(getOutput(path));
+        } else {
+          path.insertAfter(getOutput(path));
+        }
       },
       ClassExpression(path) {
         path.find(p => p.isDeclaration()).insertAfter(getOutput(path));
@@ -61,6 +65,10 @@ pluginTester({
     'function params': 'function a<b>() {}',
     'nested': 'function a<b>() {}',
     'class expression': 'let a = class b {}',
+    'export type alias': 'export type a = {}',
+    'export interface declaration': 'export interface a {}',
+    'export class declaration': 'export class a {}',
+    'export default class declaration': 'export default class a {}',
   }
 });
 

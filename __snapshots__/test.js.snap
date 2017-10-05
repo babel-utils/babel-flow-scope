@@ -299,3 +299,75 @@ let a = class b {};
 \`;
 "
 `;
+
+exports[`14. export type alias 1`] = `
+"
+export type a = {}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`
+  a:
+    kind: 'declaration'
+    path: Path: Identifier (1:12,1:13)
+      name: 'a'
+\`;
+export type a = {};
+\`{}
+\`;
+"
+`;
+
+exports[`15. export interface declaration 1`] = `
+"
+export interface a {}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`
+  a:
+    kind: 'declaration'
+    path: Path: Identifier (1:17,1:18)
+      name: 'a'
+\`;
+export interface a {}
+\`{}
+\`;
+"
+`;
+
+exports[`16. export class declaration 1`] = `
+"
+export class a {}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`
+  a:
+    kind: 'declaration'
+    path: Path: Identifier (1:13,1:14)
+      name: 'a'
+\`;
+export class a {}
+\`{}
+\`;
+"
+`;
+
+exports[`17. export default class declaration 1`] = `
+"
+export default class a {}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+\`
+  a:
+    kind: 'declaration'
+    path: Path: Identifier (1:21,1:22)
+      name: 'a'
+\`;
+export default class a {}
+\`{}
+\`;
+"
+`;
